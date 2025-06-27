@@ -16,8 +16,6 @@ public class Usuario {
 
     private String contrasena;
 
-    private String direccion;
-
     private String rol; // CLIENTE o ADMIN
 
     // Getters y setters
@@ -54,13 +52,6 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
 
     public String getRol() {
         return rol;
