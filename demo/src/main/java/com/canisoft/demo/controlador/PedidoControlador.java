@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST para gestionar pedidos.
+ */
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoControlador {
@@ -18,7 +21,9 @@ public class PedidoControlador {
         this.pedidoLogica = pedidoLogica;
     }
 
-    // ✅ DTO para recibir JSON con dirección y forma de pago
+    /**
+     * DTO para la creación de un pedido desde el carrito.
+     */
     @Data
     public static class CrearPedidoRequest {
         private Long idUsuario;
@@ -26,7 +31,12 @@ public class PedidoControlador {
         private String formaPago;
     }
 
-    // ✅ Crear un pedido desde el carrito del usuario (usando JSON completo)
+    /**
+     * Crear un nuevo pedido a partir del carrito del usuario.
+     *
+     * @param request Objeto con idUsuario, direccionEnvio y formaPago
+     * @return Pedido creado con sus items y total
+     */
     @PostMapping("/crear")
     public ResponseEntity<Pedido> crearPedidoDesdeCarrito(@RequestBody CrearPedidoRequest request) {
         Pedido pedido = pedidoLogica.crearPedidoDesdeCarrito(
@@ -37,14 +47,24 @@ public class PedidoControlador {
         return ResponseEntity.ok(pedido);
     }
 
-    // Obtener pedido por ID
+    /**
+     * Obtener un pedido específico por su ID.
+     *
+     * @param id ID del pedido
+     * @return Pedido correspondiente si existe, o 404 si no se encuentra
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Pedido> obtenerPedidoPorId(@PathVariable Long id) {
         Pedido pedido = pedidoLogica.obtenerPedidoPorId(id);
         return ResponseEntity.ok(pedido);
     }
 
-    // Listar pedidos por usuario
+    /**
+     * Listar todos los pedidos realizados por un usuario.
+     *
+     * @param idUsuario ID del usuario
+     * @return Lista de pedidos hechos por ese usuario
+     */
     @GetMapping("/usuario/{idUsuario}")
     public ResponseEntity<List<Pedido>> listarPedidosPorUsuario(@PathVariable Long idUsuario) {
         List<Pedido> pedidos = pedidoLogica.listarPedidosPorUsuario(idUsuario);
