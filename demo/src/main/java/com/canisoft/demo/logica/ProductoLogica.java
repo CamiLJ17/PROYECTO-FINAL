@@ -14,6 +14,17 @@ public class ProductoLogica {
     @Autowired
     private ProductoRepositorio productoRepositorio;
 
+    public void disminuirStock(Long idProducto, int cantidad) {
+        Producto producto = productoRepositorio.findById(idProducto)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        if (producto.getStock() < cantidad) {
+            throw new RuntimeException("Stock insuficiente para el producto: " + producto.getNombre());
+        }
+
+        producto.setStock(producto.getStock() - cantidad);
+        productoRepositorio.save(producto);
+    }
     public List<Producto> obtenerTodos() {
         return productoRepositorio.findAll();
     }

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 public class PedidoLogica {
-
+    private final ProductoLogica productoLogica;
     private final PedidoRepositorio pedidoRepositorio;
     private final PedidoItemRepositorio pedidoItemRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
@@ -25,7 +25,7 @@ public class PedidoLogica {
                         CarritoRepositorio carritoRepositorio,
                         CarritoItemRepositorio carritoItemRepositorio,
                         ProductoRepositorio productoRepositorio,
-                        CarritoLogica carritoLogica) {
+                        CarritoLogica carritoLogica,ProductoLogica productoLogica) {
         this.pedidoRepositorio = pedidoRepositorio;
         this.pedidoItemRepositorio = pedidoItemRepositorio;
         this.usuarioRepositorio = usuarioRepositorio;
@@ -33,6 +33,7 @@ public class PedidoLogica {
         this.carritoItemRepositorio = carritoItemRepositorio;
         this.productoRepositorio = productoRepositorio;
         this.carritoLogica = carritoLogica;
+        this.productoLogica = productoLogica;
     }
 
     public Pedido crearPedidoDesdeCarrito(Long idUsuario, String direccionEnvio, String formaPago) {
@@ -73,6 +74,9 @@ public class PedidoLogica {
         for (CarritoItem item : carrito.getItems()) {
             Producto productoLimpio = productoRepositorio.findById(item.getProducto().getId())
                     .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+            
+            int cantidad = item.getCantidad();
+            productoLogica.disminuirStock(productoLimpio.getId(), cantidad);
 
             PedidoItem pedidoItem = new PedidoItem();
             pedidoItem.setPedido(pedido);
