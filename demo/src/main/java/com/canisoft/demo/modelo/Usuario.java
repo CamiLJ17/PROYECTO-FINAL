@@ -3,6 +3,9 @@ package com.canisoft.demo.modelo;
 import jakarta.persistence.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Usuario {
 
     @Id
