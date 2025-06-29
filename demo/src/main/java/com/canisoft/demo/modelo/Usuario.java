@@ -1,6 +1,7 @@
 package com.canisoft.demo.modelo;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Data
