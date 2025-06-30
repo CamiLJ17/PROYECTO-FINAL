@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Controlador REST para gestionar pedidos.
  */
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/pedidos")
 public class PedidoControlador {
